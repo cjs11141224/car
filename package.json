@@ -1,0 +1,27 @@
+{
+  "name": "car-backend",
+  "version": "1.0.0",
+  "description": "新能源汽车出海平台 - 后端服务",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "scrape": "node src/scripts/manual-sync.js",
+    "test": "node test/test-suite.js",
+    "test:api": "node test/api-test.js",
+    "init-db": "node src/config/init-db.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "axios": "^1.6.2",
+    "cheerio": "^1.0.0-rc.12",
+    "better-sqlite3": "^9.2.2",
+    "node-cron": "^3.0.3",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "playwright": "^1.40.0"
+  }
+}
