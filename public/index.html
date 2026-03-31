@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新能源汽车出海平台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; }
+        header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 40px 20px; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        header p { opacity: 0.8; font-size: 1.1rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .section { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .section h2 { color: #1a1a2e; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #e0e0e0; }
+        .brands { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+        .brand-card { background: #f8f9fa; border-radius: 10px; padding: 20px; text-align: center; transition: all 0.3s; cursor: pointer; }
+        .brand-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+        .brand-card h3 { color: #1a1a2e; font-size: 1.1rem; margin-bottom: 6px; }
+        .brand-card p { color: #666; font-size: 0.85rem; }
+        .models { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .model-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; transition: all 0.3s; }
+        .model-card:hover { border-color: #4f46e5; box-shadow: 0 4px 16px rgba(79,70,229,0.15); }
+        .model-card h3 { color: #1a1a2e; font-size: 1.2rem; margin-bottom: 8px; }
+        .model-card .price { color: #4f46e5; font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; }
+        .model-card .brand-tag { display: inline-block; background: #e8efff; color: #4f46e5; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; }
+        .news { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .news-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; }
+        .news-card h3 { color: #1a1a2e; font-size: 1.1rem; margin-bottom: 10px; line-height: 1.4; }
+        .news-card .summary { color: #666; font-size: 0.9rem; margin-bottom: 12px; line-height: 1.5; }
+        .news-card .meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #999; }
+        .news-card .source { background: #f0f0f0; padding: 3px 10px; border-radius: 12px; }
+        .loading { text-align: center; padding: 60px; color: #999; font-size: 1.1rem; }
+        .error { text-align: center; padding: 60px; color: #e74c3c; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; text-align: center; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 24px; border-radius: 12px; }
+        .stat-card .number { font-size: 2.5rem; font-weight: 700; }
+        .stat-card .label { opacity: 0.9; font-size: 0.95rem; }
+        nav { position: sticky; top: 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.08); z-index: 100; padding: 12px 20px; }
+        nav ul { display: flex; justify-content: center; gap: 32px; list-style: none; max-width: 1200px; margin: 0 auto; }
+        nav a { color: #666; text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: #4f46e5; }
+        footer { background: #1a1a2e; color: white; text-align: center; padding: 24px; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#brands">品牌</a></li>
+            <li><a href="#models">车型</a></li>
+            <li><a href="#news">资讯</a></li>
+        </ul>
+    </nav>
+    
+    <header>
+        <h1>🚗 新能源汽车出海平台</h1>
+        <p>中国新能源汽车品牌展示与海外市场信息平台</p>
+    </header>
+    
+    <div class="container">
+        <!-- 统计数据 -->
+        <div class="section" id="stats">
+            <h2>📊 数据统计</h2>
+            <div class="stats" id="stats-content">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+        
+        <!-- 品牌列表 -->
+        <div class="section" id="brands">
+            <h2>🏭 品牌展示</h2>
+            <div class="brands" id="brands-content">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+        
+        <!-- 车型列表 -->
+        <div class="section" id="models">
+            <h2>🚙 热门车型</h2>
+            <div class="models" id="models-content">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+        
+        <!-- 新闻资讯 -->
+        <div class="section" id="news">
+            <h2>📰 最新资讯</h2>
+            <div class="news" id="news-content">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2026 新能源汽车出海平台 | 数据来源: 汽车之家、懂车帝、易车</p>
+    </footer>
+
+    <script>
+        // API 基础地址 - 自动检测当前域名
+        const API_BASE = window.location.origin + '/api';
+        
+        // 加载统计数据
+        async function loadStats() {
+            try {
+                const res = await fetch(API_BASE + '/dashboard/stats');
+                const data = await res.json();
+                document.getElementById('stats-content').innerHTML = `
+                    <div class="stat-card">
+                        <div class="number">${data.totalBrands}</div>
+                        <div class="label">品牌数量</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">${data.totalModels}</div>
+                        <div class="label">车型数量</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">${data.totalNews}</div>
+                        <div class="label">新闻资讯</div>
+                    </div>
+                `;
+            } catch (e) {
+                document.getElementById('stats-content').innerHTML = '<div class="error">加载失败</div>';
+            }
+        }
+        
+        // 加载品牌
+        async function loadBrands() {
+            try {
+                const res = await fetch(API_BASE + '/brands');
+                const data = await res.json();
+                document.getElementById('brands-content').innerHTML = data.map(brand => `
+                    <div class="brand-card">
+                        <h3>${brand.name}</h3>
+                        <p>${brand.nameEn || ''}</p>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('brands-content').innerHTML = '<div class="error">加载失败</div>';
+            }
+        }
+        
+        // 加载车型
+        async function loadModels() {
+            try {
+                const res = await fetch(API_BASE + '/models');
+                const data = await res.json();
+                document.getElementById('models-content').innerHTML = data.map(model => `
+                    <div class="model-card">
+                        <h3>${model.name}</h3>
+                        <div class="price">${model.price || '暂无报价'}</div>
+                        <span class="brand-tag">${model.brandId}</span>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('models-content').innerHTML = '<div class="error">加载失败</div>';
+            }
+        }
+        
+        // 加载新闻
+        async function loadNews() {
+            try {
+                const res = await fetch(API_BASE + '/news?publishedOnly=true');
+                const data = await res.json();
+                document.getElementById('news-content').innerHTML = data.map(news => `
+                    <div class="news-card">
+                        <h3>${news.title}</h3>
+                        <p class="summary">${news.summary || ''}</p>
+                        <div class="meta">
+                            <span class="source">${news.source}</span>
+                            <span>${news.publishedAt}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('news-content').innerHTML = '<div class="error">加载失败</div>';
+            }
+        }
+        
+        // 初始化
+        loadStats();
+        loadBrands();
+        loadModels();
+        loadNews();
+    </script>
+</body>
+</html>
